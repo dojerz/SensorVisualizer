@@ -6,6 +6,7 @@
 <script>
     import MG from 'metrics-graphics';
     import axios from 'axios';
+    import { getSensorData } from "./../services/dbServices"
     import 'metrics-graphics/dist/metricsgraphics.css';
 
     var dd = [
@@ -283,7 +284,7 @@
         name: 'app-main',
         data() {
             return {
-                chartData: null,
+                chartData: [],
                 testCData: [{ 'year': '1945', 'sightings': 6 }]
             };
         },
@@ -291,26 +292,39 @@
             getData() {
                 //return this.chartData;
                 console.log(this.chartData);
+            },
+            renderChart() {
+                MG.data_graphic({
+                    title: "UFO Sightings",
+                    description: "Yearly UFO sightings from 1945 to 2010.",
+                    data: JSON.parse(JSON.stringify(this.chartData)),
+                    //data: JSON.parse(JSON.stringify(this.testCData)),
+                    //markers: [{ 'year': 1964, 'label': '"The Creeping Terror" released' }],
+                    width: 500,
+                    height: 300,
+                    target: ".result",
+                    x_accessor: "year",
+                    y_accessor: "sightings",
+                });
+            },
+            async getChartData() {
+                try {
+                    let result = await getSensorData()
+                    this.chartData = result
+                } catch (e) {
+                    console.error(e);
+                }
             }
-        },
-        created() {
 
         },
+        //async created() {
+        //    await axios.get('/api/SensorData/')
+        //        .then(response => { this.chartData = response.data }).then(this.renderChart());
+        //    console.log(this.chartData);
+        //},
         mounted() {
-            axios.get('/api/SensorData/')
-                .then(response => { this.chartData = response.data });
-            MG.data_graphic({
-                title: "UFO Sightings",
-                description: "Yearly UFO sightings from 1945 to 2010.",
-                data: JSON.parse(JSON.stringify(this.chartData)),
-                //data: JSON.parse(this.testCData),
-                //markers: [{ 'year': 1964, 'label': '"The Creeping Terror" released' }],
-                width: 500,
-                height: 300,
-                target: ".result",
-                x_accessor: "year",
-                y_accessor: "sightings",
-            });
+            this.getChartData()
+            this.renderChart()
         }
     }
 </script>

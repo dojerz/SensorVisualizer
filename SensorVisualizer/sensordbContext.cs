@@ -25,7 +25,7 @@ namespace SensorVisualizer
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
                 //optionsBuilder.UseNpgsql("Host=192.168.1.74;Database=sensordb;Username=pi;Password=raspberry");
-                optionsBuilder.UseNpgsql("Host=192.168.0.15;Database=sensordb;Username=pi;Password=raspberry");
+                optionsBuilder.UseNpgsql("Host=192.168.1.142;Database=sensordb;Username=pi;Password=raspberry");
             }
         }
 
