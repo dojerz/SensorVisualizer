@@ -15,11 +15,31 @@ namespace SensorVisualizer.Controllers
         public object Get()
         {
             List<Data.sensorviewdata> sensorviewdatalist = new List<Data.sensorviewdata>();
-            sensorviewdatalist.Add(new Data.sensorviewdata()
+
+            sensordbContext sensordb = new sensordbContext();
+            var lastday = sensordb.Sensordata.Where(i => i.ResultTime > DateTime.Now.AddDays(-14) && i.ResultTime < DateTime.Now.AddDays(-6)).ToList();
+
+            foreach (var item in lastday)
             {
-                date = DateTime.Today,
-                value = "2"
-            });
+                sensorviewdatalist.Add(new Data.sensorviewdata()
+                {
+                    date = item.ResultTime.ToString("yyyy-M-dd/H:m:s"),
+                    value = item.Temperaturevalue.ToString().Replace(',','.')
+                    //value = item.Humidityvalue.ToString().Replace(',', '.')
+                });
+            }
+
+            
+            //sensorviewdatalist.Add(new Data.sensorviewdata()
+            //{
+            //    date = DateTime.Today.ToShortDateString(),
+            //    value = "2"
+            //});
+            //sensorviewdatalist.Add(new Data.sensorviewdata()
+            //{
+            //    date = DateTime.Today.AddDays(1).ToShortDateString(),
+            //    value = "5"
+            //});
             return JsonConvert.SerializeObject(sensorviewdatalist);
         }
     }

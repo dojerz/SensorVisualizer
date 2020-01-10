@@ -1,13 +1,12 @@
 ﻿<template>
-    <div class="result">
-
+    <div>
+        <chart :issues="issues"></chart>
     </div>
 </template>
 <script>
-    import MG from 'metrics-graphics';
-    import axios from 'axios';
+    import chart from "./../components/chart.vue"
     import { getSensorData } from "./../services/dbServices"
-    import 'metrics-graphics/dist/metricsgraphics.css';
+
 
     var dd = [
         {
@@ -276,16 +275,16 @@
         }
     ];
 
-
-
-
     export default {
 
         name: 'app-main',
+        components: {
+            chart
+        },
         data() {
             return {
-                chartData: [],
-                testCData: [{ 'year': '1945', 'sightings': 6 }]
+                issues: [],
+                chartData: []
             };
         },
         methods: {
@@ -293,24 +292,11 @@
                 //return this.chartData;
                 console.log(this.chartData);
             },
-            renderChart() {
-                MG.data_graphic({
-                    title: "UFO Sightings",
-                    description: "Yearly UFO sightings from 1945 to 2010.",
-                    data: JSON.parse(JSON.stringify(this.chartData)),
-                    //data: JSON.parse(JSON.stringify(this.testCData)),
-                    //markers: [{ 'year': 1964, 'label': '"The Creeping Terror" released' }],
-                    width: 500,
-                    height: 300,
-                    target: ".result",
-                    x_accessor: "year",
-                    y_accessor: "sightings",
-                });
-            },
             async getChartData() {
                 try {
                     let result = await getSensorData()
                     this.chartData = result
+                    this.issues = result
                 } catch (e) {
                     console.error(e);
                 }
@@ -324,7 +310,7 @@
         //},
         mounted() {
             this.getChartData()
-            this.renderChart()
+            //this.renderChart()
         }
     }
 </script>

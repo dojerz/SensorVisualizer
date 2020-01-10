@@ -20,8 +20,7 @@ namespace SensorVisualizer.Controllers
 
         public IActionResult Index()
         {
-            sensordbContext sensordb = new sensordbContext();
-            var data = sensordb.Sensordata.ToList();
+
             return View();
         }
 

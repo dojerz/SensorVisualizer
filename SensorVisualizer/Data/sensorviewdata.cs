@@ -7,7 +7,7 @@ namespace SensorVisualizer.Data
 {
     public class sensorviewdata
     {
-        public DateTime date { get; set; }
+        public string date { get; set; }
         public string value { get; set; }
     }
 }
