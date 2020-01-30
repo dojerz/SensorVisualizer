@@ -1,6 +1,6 @@
 ﻿<template>
-    <div class="result">
-        kisfaszom
+    <div >
+        {{domtarget}}
     </div>
 </template>
 <script>
@@ -9,17 +9,15 @@
 
     export default {
         name: 'app-chart',
-        props: ["issues"],
+        props: 
+            ["sensorvalues", "domtarget"],
         data() {
             return {
                 chart: null,
-                testCData: [{ 'year': '1945', 'sightings': 6 }, { 'year': '1947', 'sightings': 10 }]
             }
         },
         watch: {
-            issues(val) {
-                console.log('loaded');
-                //console.log(val);
+            sensorvalues(val) {
                 this.renderChart(val);
             }
         },
@@ -33,12 +31,14 @@
                     //data: JSON.parse(JSON.stringify(this.chartData)),
                     data: converteddata,// JSON.parse(JSON.stringify(issues.data)),
                     animate_on_load: true,
+                    color: "#fdff00",
+                    //interpolate: d3.curveCatmullRom.alpha(0),
                     //data: JSON.parse(JSON.stringify(this.testCData)),
                     //markers: [{ 'year': 1964, 'label': '"The Creeping Terror" released' }],
-                    width: 800,
-                    height: 500,
+                    width: 600,
+                    height: 400,
                     min_y: 18,
-                    target: ".result",
+                    target: this.domtarget,//".result",
                     x_accessor: "date",
                     y_accessor: "value",
                     brush: 'x'
@@ -46,7 +46,7 @@
             },
         },
         mounted() {
-            this.renderChart();
+            //this.renderChart();
         }
     }
 </script>

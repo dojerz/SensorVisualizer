@@ -12,34 +12,37 @@ namespace SensorVisualizer.Controllers
     [ApiController]
     public class SensorDataController : ControllerBase
     {
-        public object Get()
+        [HttpGet("{datatype}/{sensorid}/{days}")]
+        public object Get(string datatype, string sensorid, string days)
         {
             List<Data.sensorviewdata> sensorviewdatalist = new List<Data.sensorviewdata>();
 
             sensordbContext sensordb = new sensordbContext();
-            var lastday = sensordb.Sensordata.Where(i => i.ResultTime > DateTime.Now.AddDays(-14) && i.ResultTime < DateTime.Now.AddDays(-6)).ToList();
+            //var lastday = sensordb.Sensordata.Where(i => i.ResultTime > DateTime.Now.AddDays(-14) && i.ResultTime < DateTime.Now.AddDays(-6)).ToList();
+            var lastday = sensordb.Sensordata.Where(i => i.ResultTime > DateTime.Now.AddDays(-4)).ToList();
 
-            foreach (var item in lastday)
+            if (datatype == "temp")
             {
-                sensorviewdatalist.Add(new Data.sensorviewdata()
+                foreach (var item in lastday)
                 {
-                    date = item.ResultTime.ToString("yyyy-M-dd/H:m:s"),
-                    value = item.Temperaturevalue.ToString().Replace(',','.')
-                    //value = item.Humidityvalue.ToString().Replace(',', '.')
-                });
+                    sensorviewdatalist.Add(new Data.sensorviewdata()
+                    {
+                        date = item.ResultTime.ToString("yyyy-M-dd/H:m:s"),
+                        value = item.Temperaturevalue.ToString().Replace(',', '.')
+                    });
+                }
             }
-
-            
-            //sensorviewdatalist.Add(new Data.sensorviewdata()
-            //{
-            //    date = DateTime.Today.ToShortDateString(),
-            //    value = "2"
-            //});
-            //sensorviewdatalist.Add(new Data.sensorviewdata()
-            //{
-            //    date = DateTime.Today.AddDays(1).ToShortDateString(),
-            //    value = "5"
-            //});
+            else if (datatype == "hum")
+            {
+                foreach (var item in lastday)
+                {
+                    sensorviewdatalist.Add(new Data.sensorviewdata()
+                    {
+                        date = item.ResultTime.ToString("yyyy-M-dd/H:m:s"),
+                        value = item.Humidityvalue.ToString().Replace(',', '.')
+                    });
+                }
+            }
             return JsonConvert.SerializeObject(sensorviewdatalist);
         }
     }
