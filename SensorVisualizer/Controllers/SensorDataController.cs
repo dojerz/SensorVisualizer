@@ -18,8 +18,8 @@ namespace SensorVisualizer.Controllers
             List<Data.sensorviewdata> sensorviewdatalist = new List<Data.sensorviewdata>();
 
             sensordbContext sensordb = new sensordbContext();
-            //var lastday = sensordb.Sensordata.Where(i => i.ResultTime > DateTime.Now.AddDays(-14) && i.ResultTime < DateTime.Now.AddDays(-6)).ToList();
-            var lastday = sensordb.Sensordata.Where(i => i.ResultTime > DateTime.Now.AddDays(-4)).ToList();
+            //var lastday = sensordb.Sensordata.Where(i => i.ResultTime > DateTime.Now.AddDays(-49) && i.ResultTime < DateTime.Now.AddDays(-42)).ToList();
+            var lastday = sensordb.Sensordata.Where(i => i.ResultTime > DateTime.Now.AddDays(-2)).ToList();
 
             if (datatype == "temp")
             {

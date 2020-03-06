@@ -66,8 +66,8 @@
 </script>
 <style>
     /* REQUIRED */
-    @import 'pretty-checkbox/scss/variables';
-    @import 'pretty-checkbox/scss/core';
+    /*@import 'pretty-checkbox/scss/variables';
+    @import 'pretty-checkbox/scss/core';*/
 
 
     /* OPTIONALS */
