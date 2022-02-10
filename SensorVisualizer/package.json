@@ -24,7 +24,7 @@
     "babel-cli": "^6.26.0",
     "babel-loader": "^8.0.4",
     "css-loader": "^1.0.1",
-    "node-sass": "^4.11.0",
+    "node-sass": "^7.0.0",
     "pretty-checkbox-vue": "^1.1.9",
     "sass-loader": "^7.1.0",
     "vue-loader": "^15.7.2",
