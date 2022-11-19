@@ -29,6 +29,6 @@
     "sass-loader": "^7.1.0",
     "vue-loader": "^15.7.2",
     "webpack": "^4.41.3",
-    "webpack-cli": "^3.3.10"
+    "webpack-cli": "^3.3.12"
   }
 }
